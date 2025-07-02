@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    url: jdbc:postgresql://qa-db:5432/admin-api
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+  mail:
+    host: ${MAIL_HOST_QA}
+    port: ${MAIL_PORT_QA}
+    username: ${MAIL_USERNAME_QA}
+    password: ${MAIL_PASSWORD_QA}
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+server:
+  port: 8080
+
+service:
+  base-host-path: ${BASE_HOST_PATH_QA} # Host Path for the Frontend to access the API for Accounts and URL Shortening
+  email-verify-template-name: ${EMAIL_VERIFY_TEMPLATE_NAME_QA}
+  email-reset-password-template-name: ${EMAIL_RESET_PASSWORD_TEMPLATE_NAME_QA}
+  max-verification-code-attempts: ${MAX_VERIFICATION_CODE_ATTEMPTS_QA}
+  max-reset-password-attempts: ${MAX_RESET_PASSWORD_ATTEMPTS_QA}
+
+jwt:
+  jwt-secret: ${JWT_SECRET_QA}
+  jwt-expiration: ${JWT_EXPIRATION_QA}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION_QA}

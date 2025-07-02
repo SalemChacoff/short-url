@@ -1,0 +1,37 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://dev-db:5432/admin-api
+    username: devuser
+    password: devpass
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+  mail:
+    host: ${MAIL_HOST_DEV}
+    port: ${MAIL_PORT_DEV}
+    username: ${MAIL_USERNAME_DEV}
+    password: ${MAIL_PASSWORD_DEV}
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+server:
+  port: 8080
+
+service:
+  base-host-path: ${BASE_HOST_PATH_DEV} # Host Path for the Frontend to access the API for Accounts and URL Shortening
+  email-verify-template-name: ${EMAIL_VERIFY_TEMPLATE_NAME_DEV}
+  email-reset-password-template-name: ${EMAIL_RESET_PASSWORD_TEMPLATE_NAME_DEV}
+  max-verification-code-attempts: ${MAX_VERIFICATION_CODE_ATTEMPTS_DEV}
+  max-reset-password-attempts: ${MAX_RESET_PASSWORD_ATTEMPTS_DEV}
+
+jwt:
+  jwt-secret: ${JWT_SECRET_DEV}
+  jwt-expiration: ${JWT_EXPIRATION_DEV}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION_DEV}

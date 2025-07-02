@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: admin-api
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  cache:
+    type: simple
+  output:
+    ansi:
+      enabled: always
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: user
+    password: pass
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+  data:
+    rest:
+      base-path: admin-api
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+jwt:
+  jwt-secret: defaultsecretkey12345678901234567890
+  jwt-expiration: 86400000
+  refresh-token-expiration: 604800000 # 7 days
+
+service:
+  base-host-path: http://localhost:8080 # Host Path for the Frontend to access the API for Accounts and URL Shortening
+  email-verify-template-name: VerificationMailTemplate
+  email-reset-password-template-name: ResetPasswordMailTemplate
+  max-verification-code-attempts: 5
+  max-reset-password-attempts: 5
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level){highlight} %clr(%logger{36}){cyan} - %clr([PATH - %X{requestPath}]){blue} %clr([HEADERS - %X{requestHeaders}]){yellow} %clr(%m){%5p==INFO->green, %5p==WARN->yellow, %5p==ERROR->red}%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [PATH - %X{requestPath}] [HEADERS - %X{requestHeaders}] %msg%n"
+  level:
+    root: INFO
+    com.java.admin: DEBUG
+  file:
+    name: logs/application.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30

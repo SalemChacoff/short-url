@@ -1,0 +1,40 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/admin-api
+    username: postgres
+    password: admin
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 60000
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME_LOCAL}
+    password: ${MAIL_PASSWORD_LOCAL}
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+server:
+  port: 8080
+
+service:
+  base-host-path: http://localhost:8080 # Host Path for the Frontend to access the API for Accounts and URL Shortening
+  email-verify-template-name: VerificationMailTemplate
+  email-reset-password-template-name: ResetPasswordMailTemplate
+  max-verification-code-attempts: 5
+  max-reset-password-attempts: 5
+
+jwt:
+  jwt-secret: defaultsecretkey12345678901234567890
+  jwt-expiration: 86400000
+  refresh-token-expiration: 604800000 # 7 days

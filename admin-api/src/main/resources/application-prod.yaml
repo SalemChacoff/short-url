@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://prod-db:5432/admin-api
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 15
+  mail:
+    host: ${MAIL_HOST_PROD}
+    port: ${MAIL_PORT_PROD}
+    username: ${MAIL_USERNAME_PROD}
+    password: ${MAIL_PASSWORD_PROD}
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+server:
+  port: 8080
+
+service:
+  base-host-path: ${BASE_HOST_PATH_PROD} # Host Path for the Frontend to access the API for Accounts and URL Shortening
+  email-verify-template-name: ${EMAIL_VERIFY_TEMPLATE_NAME_PROD}
+  email-reset-password-template-name: ${EMAIL_RESET_PASSWORD_TEMPLATE_NAME_PROD}
+  max-verification-code-attempts: ${MAX_VERIFICATION_CODE_ATTEMPTS_PROD}
+  max-reset-password-attempts: ${MAX_RESET_PASSWORD_ATTEMPTS_PROD}
+
+jwt:
+  jwt-secret: ${JWT_SECRET_PROD}
+  jwt-expiration: ${JWT_EXPIRATION_PROD}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION_PROD}
