@@ -4,9 +4,15 @@ import com.java.admin.config.CustomLogger;
 import com.java.admin.dto.ApiPaginationResponse;
 import com.java.admin.dto.url.request.CreateUrlRequestDto;
 import com.java.admin.dto.url.request.GetUrlsRequestDto;
+import com.java.admin.dto.url.request.PatchUrlRequestDto;
+import com.java.admin.dto.url.request.PutUrlRequestDto;
 import com.java.admin.dto.url.response.CreateUrlResponseDto;
+import com.java.admin.dto.url.response.DeleteUrlResponseDto;
+import com.java.admin.dto.url.response.PatchUrlResponseDto;
+import com.java.admin.dto.url.response.PutUrlResponseDto;
 import com.java.admin.entity.url.UrlEntity;
 import com.java.admin.entity.user.UserEntity;
+import com.java.admin.exception.url.UrlException;
 import com.java.admin.mapper.url.UrlMapper;
 import com.java.admin.repository.url.UrlRepository;
 import com.java.admin.repository.url.specification.UrlSpecification;
@@ -35,6 +41,10 @@ public class UrlServiceImpl implements IUrlService {
         UrlEntity urlEntity = urlRepository.findUrlEntitiesByUserAndDeletedIsFalseAndOriginalUrl(userId, createUrlRequestDto.url()).orElse(null);
         if (urlEntity != null) {
             CustomLogger.logInfo(UrlServiceImpl.class, "URL already exists for user ID: " + userId);
+            throw new UrlException(
+                    UrlException.URL_ALREADY_EXISTS_CODE,
+                    UrlException.URL_ALREADY_EXISTS_MESSAGE,
+                    UrlException.URL_ALREADY_EXISTS_CAUSE);
         }
 
         UserEntity userEntity = userRepository.findById(userId)
@@ -73,7 +83,15 @@ public class UrlServiceImpl implements IUrlService {
 
         if (urlEntityPage.isEmpty()) {
             CustomLogger.logInfo(UrlServiceImpl.class, "No URLs found for user ID: " + userId);
-            return new ApiPaginationResponse(0, 0, getUrlsRequestDto.page(), getUrlsRequestDto.size(), true, true, false, false, null);
+            return new ApiPaginationResponse(
+                    0,
+                    0,
+                    getUrlsRequestDto.page(),
+                    getUrlsRequestDto.size(),
+                    true,
+                    true, false,
+                    false,
+                    null);
         }
 
         return new ApiPaginationResponse(
@@ -87,6 +105,102 @@ public class UrlServiceImpl implements IUrlService {
                 urlEntityPage.hasPrevious(),
                 urlMapper.toResponseDtoList(urlEntityPage.getContent())
         );
+    }
+
+    @Override
+    public PatchUrlResponseDto toggleUrlStatus(PatchUrlRequestDto patchUrlRequestDto, Long urlId, Long userId) {
+        CustomLogger.logInfo(UrlServiceImpl.class, "Toggling URL status for user ID: " + userId);
+        UrlEntity urlEntity = urlRepository.findByIdAndUserIdAndNotDeleted(urlId, userId).orElse(null);
+
+        if (urlEntity == null) {
+            throw new UrlException(
+                    UrlException.URL_NOT_FOUND_CODE,
+                    UrlException.URL_NOT_FOUND_MESSAGE,
+                    UrlException.URL_NOT_FOUND_CAUSE
+            );
+        }
+
+        boolean isActive = patchUrlRequestDto.isActive() != null ? patchUrlRequestDto.isActive() : urlEntity.isActive();
+
+        int result = urlRepository.toggleUrlStatus(urlId, userId, isActive);
+        if (result <= 0) {
+            throw new UrlException(
+                    UrlException.URL_STATUS_UPDATE_FAILED_CODE,
+                    UrlException.URL_STATUS_UPDATE_FAILED_MESSAGE,
+                    UrlException.URL_STATUS_UPDATE_FAILED_CAUSE
+            );
+        }
+
+        return urlMapper.toPatchResponseDto(urlEntity);
+    }
+
+    @Override
+    public PutUrlResponseDto updateUrl(PutUrlRequestDto putUrlRequestDto, Long urlId, Long userId) {
+        CustomLogger.logInfo(UrlServiceImpl.class, "Updating URL with ID: " + urlId + " for user ID: " + userId);
+        UrlEntity urlEntity = urlRepository.findByIdAndUserIdAndNotDeleted(urlId, userId).orElse(null);
+
+        if (urlEntity == null) {
+            throw new UrlException(
+                    UrlException.URL_NOT_FOUND_CODE,
+                    UrlException.URL_NOT_FOUND_MESSAGE,
+                    UrlException.URL_NOT_FOUND_CAUSE
+            );
+        }
+
+        int result = urlRepository.updateUrl(
+                urlId,
+                userId,
+                putUrlRequestDto.customAlias(),
+                putUrlRequestDto.url(),
+                putUrlRequestDto.description(),
+                putUrlRequestDto.validSince(),
+                putUrlRequestDto.validUntil(),
+                putUrlRequestDto.isActive()
+        );
+
+        if (result <= 0) {
+            throw new UrlException(
+                    UrlException.URL_UPDATE_FAILED_CODE,
+                    UrlException.URL_UPDATE_FAILED_MESSAGE,
+                    UrlException.URL_UPDATE_FAILED_CAUSE
+            );
+        }
+
+        // Update the URL entity with the new values
+        urlEntity.setCustomAlias(putUrlRequestDto.customAlias());
+        urlEntity.setOriginalUrl(putUrlRequestDto.url());
+        urlEntity.setDescription(putUrlRequestDto.description());
+        urlEntity.setValidSince(putUrlRequestDto.validSince());
+        urlEntity.setValidUntil(putUrlRequestDto.validUntil());
+        urlEntity.setActive(putUrlRequestDto.isActive());
+
+        return urlMapper.toPutResponseDto(urlEntity);
+    }
+
+    @Override
+    public DeleteUrlResponseDto deleteUrl(Long urlId, Long userId) {
+        CustomLogger.logInfo(UrlServiceImpl.class, "Deleting URL with ID: " + urlId + " for user ID: " + userId);
+        UrlEntity urlEntity = urlRepository.findByIdAndUserIdAndNotDeleted(urlId, userId).orElse(null);
+
+        if (urlEntity == null) {
+            throw new UrlException(
+                    UrlException.URL_NOT_FOUND_CODE,
+                    UrlException.URL_NOT_FOUND_MESSAGE,
+                    UrlException.URL_NOT_FOUND_CAUSE
+            );
+        }
+
+        int result = urlRepository.softDeleteUrl(urlId, userId);
+
+        if (result <= 0) {
+            throw new UrlException(
+                    UrlException.URL_DELETE_FAILED_CODE,
+                    UrlException.URL_DELETE_FAILED_MESSAGE,
+                    UrlException.URL_DELETE_FAILED_CAUSE
+            );
+        }
+
+        return new DeleteUrlResponseDto(true);
     }
 
 

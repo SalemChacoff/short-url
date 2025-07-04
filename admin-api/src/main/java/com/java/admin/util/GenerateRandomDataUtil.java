@@ -15,7 +15,7 @@ public class GenerateRandomDataUtil {
     }
 
     public static String generateShortUrl(long id) {
-        // Usar el ID como semilla para el generador aleatorio
+        // Users the provided ID to seed the random number generator for consistent results
         Random random = new Random(id);
         StringBuilder sb = new StringBuilder(SHORT_URL_LENGTH);
 
