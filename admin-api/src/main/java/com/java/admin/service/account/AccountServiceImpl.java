@@ -86,7 +86,7 @@ public class AccountServiceImpl implements IAccountService {
         sendVerificationMail(verificationUrl, finalUserEntity);
 
         return new CreateAccountResponseDto(
-                "User account created successfully with email: " + userEntity.getEmail()
+                "Account created successfully"
         );
     }
 

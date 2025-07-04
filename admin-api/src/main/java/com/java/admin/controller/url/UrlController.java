@@ -57,7 +57,7 @@ public class UrlController {
 
     @GetMapping(produces = "application/json")
     public ResponseEntity<ApiResponseDto> getAllUrlsByUserId(
-            @ModelAttribute GetUrlsRequestDto getUrlsRequestDto,
+            @Valid @ModelAttribute GetUrlsRequestDto getUrlsRequestDto,
             Authentication authentication) {
 
         Object principal = authentication.getPrincipal();
