@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -24,6 +25,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class AccountControllerTest {
+
+    private static final String VALID_USERNAME = "johndoe232";
+    private static final String VALID_PASSWORD = "Password123!";
+    private static final String VALID_EMAIL = "john.doe@example.com";
+    private static final String VALID_FIRST_NAME = "John";
+    private static final String VALID_LAST_NAME = "Doe";
+    private static final String VALID_PHONE_NUMBER = "01234567890";
+    private static final String VALID_ADDRESS = "123 Example Street";
+    private static final String VALID_TOKEN = "1j2k3l4m5n6o7p8q9r0s1t2u33xr";
+    private static final String VALID_VERIFICATION_CODE = "A3NKL2";
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
@@ -43,30 +54,40 @@ class AccountControllerTest {
     @Test
     void createUserAccount_shouldReturnCreated() throws Exception {
         // Arrange
-        CreateAccountRequestDto requestDto = new CreateAccountRequestDto("test@example.com", "Password123!", "John.doe@gmail.com", "John", "Doe", "123456789", "example street");
+        CreateAccountRequestDto requestDto = new CreateAccountRequestDto(
+                VALID_USERNAME,
+                VALID_PASSWORD,
+                VALID_EMAIL,
+                VALID_FIRST_NAME,
+                VALID_LAST_NAME,
+                VALID_PHONE_NUMBER,
+                VALID_ADDRESS);
         CreateAccountResponseDto responseDto = new CreateAccountResponseDto("Account created successfully");
         when(accountService.createAccount(any(CreateAccountRequestDto.class))).thenReturn(responseDto);
 
-        // Act & Assert
-        mockMvc.perform(post(ApiAccountEndpoints.BASE_PATH + ApiAccountEndpoints.CREATE_ACCOUNT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestDto)))
+        // Act
+        ResultActions resultActions = mockMvc.perform(post(ApiAccountEndpoints.BASE_PATH + ApiAccountEndpoints.CREATE_ACCOUNT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestDto)));
+
+        // Assert
+        resultActions
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.email").value("test@example.com"));
+                .andExpect(jsonPath("$.data.message").value("Account created successfully"));
 
+        // Verify that the service method was called
         verify(accountService, times(1)).createAccount(any(CreateAccountRequestDto.class));
     }
 
     @Test
     void verifyAccount_shouldReturnOk() throws Exception {
         // Arrange
-        String token = "valid-token";
-        VerifyAccountResponseDto responseDto = new VerifyAccountResponseDto("Account verified successfully", "token aksjdskajd");
+        VerifyAccountResponseDto responseDto = new VerifyAccountResponseDto("Account verified successfully", VALID_TOKEN);
         when(accountService.verifyAccount(any(VerifyAccountRequestDto.class))).thenReturn(responseDto);
 
         // Act & Assert
-        mockMvc.perform(get(ApiAccountEndpoints.BASE_PATH + ApiAccountEndpoints.VERIFY_ACCOUNT, token))
+        mockMvc.perform(get(ApiAccountEndpoints.BASE_PATH + ApiAccountEndpoints.VERIFY_ACCOUNT, VALID_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.message").value("Account verified successfully"));
@@ -77,7 +98,7 @@ class AccountControllerTest {
     @Test
     void resendVerificationCode_shouldReturnOk() throws Exception {
         // Arrange
-        ResendVerificationCodeAccountRequestDto requestDto = new ResendVerificationCodeAccountRequestDto("test@example.com");
+        ResendVerificationCodeAccountRequestDto requestDto = new ResendVerificationCodeAccountRequestDto(VALID_EMAIL);
         ResendVerificationCodeAccountResponseDto responseDto = new ResendVerificationCodeAccountResponseDto("Verification code resent");
         when(accountService.resendVerificationCode(any())).thenReturn(responseDto);
 
@@ -95,7 +116,8 @@ class AccountControllerTest {
     @Test
     void validateCode_shouldReturnOk() throws Exception {
         // Arrange
-        ValidateCodeAccountRequestDto requestDto = new ValidateCodeAccountRequestDto("test@example.com", "123456", "valid-token", "Password123!");
+        ValidateCodeAccountRequestDto requestDto = new ValidateCodeAccountRequestDto(
+                VALID_EMAIL, VALID_TOKEN, VALID_VERIFICATION_CODE, VALID_PASSWORD);
         ValidateCodeAccountResponseDto responseDto = new ValidateCodeAccountResponseDto("Code validated successfully");
         when(accountService.validateCode(any())).thenReturn(responseDto);
 
