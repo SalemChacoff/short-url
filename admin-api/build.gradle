@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.hibernate.orm' version '6.6.13.Final'
     id 'org.graalvm.buildtools.native' version '0.10.6'
+    id 'jacoco'
 }
 
 group = 'com.java.admin'
@@ -51,6 +52,22 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Unit Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+
+    // Integration Testing
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+
+    // API Testing
+    testImplementation 'io.rest-assured:rest-assured'
+
+    // Contract Testing
+    //testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 }
 
 hibernate {
@@ -59,6 +76,32 @@ hibernate {
     }
 }
 
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    dependsOn test
+}
+
+// Opcional: verificación de umbrales de cobertura
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.70  // 70% de cobertura mínima
+            }
+        }
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
