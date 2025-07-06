@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class AuthenticationController {
     )
     @PostMapping("/login")
     public ResponseEntity<ApiResponseDto> authenticate(
-            @RequestBody LoginRequestDto request
+            @Valid @RequestBody LoginRequestDto request
     ) {
 
         CustomLogger.logInfo(AuthenticationController.class, "User login attempt for email: " + request.email());
@@ -102,7 +103,7 @@ public class AuthenticationController {
             }
     )
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto request) {
+    public ResponseEntity<ApiResponseDto> refreshToken(@Valid @RequestBody RefreshTokenRequestDto request) {
 
         CustomLogger.logInfo(AuthenticationController.class, "Refresh token request received for token: " + request.refreshToken());
 
