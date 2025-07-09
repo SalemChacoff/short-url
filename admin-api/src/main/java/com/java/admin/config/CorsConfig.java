@@ -1,0 +1,39 @@
+package com.java.admin.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Configuration
+public class CorsConfig {
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Permitir orígenes específicos - ajusta según tu frontend
+        configuration.setAllowedOriginPatterns(List.of("*"));
+
+        // Permitir métodos HTTP comunes
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+
+        // Permitir headers comunes
+        configuration.setAllowedHeaders(List.of("*"));
+
+        // Permitir credenciales
+        configuration.setAllowCredentials(true);
+
+        // Configurar headers expuestos
+        configuration.setExposedHeaders(List.of("Authorization"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+}

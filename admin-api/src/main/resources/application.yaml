@@ -23,6 +23,10 @@ spring:
     rest:
       base-path: admin-api
 
+server:
+  servlet:
+    context-path: /admin-api
+
 springdoc:
   api-docs:
     enabled: true
