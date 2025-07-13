@@ -27,7 +27,7 @@ import com.java.admin.usecase.account.IAccountService;
 import com.java.admin.util.GenerateRandomDataUtil;
 import com.java.admin.util.SendMailUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -43,7 +43,7 @@ public class AccountServiceImpl implements IAccountService {
     private final SendMailUtil sendMailUtil;
     private final AccountMapper accountMapper;
     private final ServicePropertiesConfig servicePropertiesConfig;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CreateAccountResponseDto createAccount(CreateAccountRequestDto createAccountRequestDto) {
@@ -76,9 +76,6 @@ public class AccountServiceImpl implements IAccountService {
         userEntity.setMaxResetPasswordAttempts(0);
         String verificationUrl = servicePropertiesConfig.getBaseHostPath() + "/api/v1/account/verification/" + verificationToken;
 
-
-        // Set the password using the password encoder
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userEntity.setPassword(passwordEncoder.encode(createAccountRequestDto.password()));
         userEntity = userRepository.save(userEntity);
 
@@ -203,7 +200,6 @@ public class AccountServiceImpl implements IAccountService {
             );
         }
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         boolean isCodeValid = userEntity.getVerificationCode().equals(validateCodeAccountRequestDto.verificationCode());
         boolean isPasswordValid = passwordEncoder.matches(validateCodeAccountRequestDto.password(), userEntity.getPassword());
 
@@ -388,7 +384,6 @@ public class AccountServiceImpl implements IAccountService {
         }
 
         // If the reset password verificationCode is valid, update the password
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userEntity.setPassword(passwordEncoder.encode(changePasswordRequestDto.newPassword()));
         userEntity.setResetPasswordToken(null);
         userEntity.setResetPasswordTokenExpiry(null);
