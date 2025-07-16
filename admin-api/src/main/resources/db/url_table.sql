@@ -8,10 +8,10 @@ CREATE TABLE url_table
     user_id      BIGINT                                  NOT NULL,
     click_count  BIGINT                                  NOT NULL,
     is_active    BOOLEAN                                 NOT NULL,
-    valid_since  TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
-    valid_until  TIMESTAMP WITHOUT TIME ZONE,
-    created_at   TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
-    updated_at   TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
+    valid_since  TIMESTAMP WITH TIME ZONE             NOT NULL,
+    valid_until  TIMESTAMP WITH TIME ZONE,
+    created_at   TIMESTAMP WITH TIME ZONE             NOT NULL,
+    updated_at   TIMESTAMP WITH TIME ZONE             NOT NULL,
     is_deleted   BOOLEAN                                 NOT NULL,
     CONSTRAINT pk_url_table PRIMARY KEY (id)
 );

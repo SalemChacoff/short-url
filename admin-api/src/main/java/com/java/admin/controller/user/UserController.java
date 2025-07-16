@@ -5,6 +5,8 @@ import com.java.admin.usecase.user.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,5 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final IUserService userService;
+
+    @GetMapping(value = "/info", produces = "application/json")
+    public String getUserInfo() {
+        // This is a placeholder for user info retrieval logic
+        log.info("Retrieving user information");
+        return "User information retrieved successfully";
+    }
+
+    @PostMapping(value = "/profile", consumes = "application/json", produces = "application/json")
+    public String updateUserProfile() {
+        // This is a placeholder for user profile update logic
+        log.info("Updating user profile");
+        return "User profile updated successfully";
+    }
 
 }
