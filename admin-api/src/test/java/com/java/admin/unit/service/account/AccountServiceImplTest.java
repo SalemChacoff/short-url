@@ -437,9 +437,7 @@ class AccountServiceImplTest {
         when(userRepository.findUserEntityByEmail(request.email()))
                 .thenReturn(Optional.of(userEntity));
         when(servicePropertiesConfig.getBaseHostPath()).thenReturn("http://localhost:8080");
-        when(servicePropertiesConfig.getEmailVerifyTemplateName()).thenReturn("verification-template");
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
-        doNothing().when(sendMailUtil).sendHtmlMessage(anyString(), anyString(), anyString(), anyMap());
 
         // Act
         ResendVerificationCodeAccountResponseDto response = accountService.resendVerificationCode(request);

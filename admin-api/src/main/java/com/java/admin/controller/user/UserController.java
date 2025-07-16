@@ -1,12 +1,20 @@
 package com.java.admin.controller.user;
 
+import com.java.admin.config.CustomLogger;
 import com.java.admin.constant.ApiUserEndpoints;
+import com.java.admin.dto.ApiResponseDto;
+import com.java.admin.dto.user.request.UpdateUserRequestDto;
 import com.java.admin.usecase.user.IUserService;
+import com.java.admin.util.CustomAuthUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,17 +29,29 @@ public class UserController {
     private final IUserService userService;
 
     @GetMapping(value = "/info", produces = "application/json")
-    public String getUserInfo() {
-        // This is a placeholder for user info retrieval logic
-        log.info("Retrieving user information");
-        return "User information retrieved successfully";
+    public ResponseEntity<ApiResponseDto> getUserInfo(Authentication authentication) {
+        CustomAuthUser getCurrentUserId = (CustomAuthUser) authentication.getPrincipal();
+        CustomLogger.logInfo(UserController.class, "Fetching user info for user ID: " + getCurrentUserId.getId());
+        return ResponseEntity.ok(
+                new ApiResponseDto(
+                        null,
+                        true,
+                        userService.getUserById(getCurrentUserId.getId())
+                ));
     }
 
     @PostMapping(value = "/profile", consumes = "application/json", produces = "application/json")
-    public String updateUserProfile() {
-        // This is a placeholder for user profile update logic
-        log.info("Updating user profile");
-        return "User profile updated successfully";
+    public ResponseEntity<ApiResponseDto> updateUserProfile(@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto,
+                                                            Authentication authentication) {
+        CustomAuthUser getCurrentUserId = (CustomAuthUser) authentication.getPrincipal();
+        CustomLogger.logInfo(UserController.class, "Fetching user info for user ID: " + getCurrentUserId.getId());
+
+        return ResponseEntity.ok(
+                new ApiResponseDto(
+                        null,
+                        true,
+                        userService.updateUser(getCurrentUserId.getId(), updateUserRequestDto)
+                ));
     }
 
 }
