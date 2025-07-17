@@ -28,7 +28,7 @@ public class UserController {
 
     private final IUserService userService;
 
-    @GetMapping(value = "/info", produces = "application/json")
+    @GetMapping(value = ApiUserEndpoints.PROFILE_PATH, produces = "application/json")
     public ResponseEntity<ApiResponseDto> getUserInfo(Authentication authentication) {
         CustomAuthUser getCurrentUserId = (CustomAuthUser) authentication.getPrincipal();
         CustomLogger.logInfo(UserController.class, "Fetching user info for user ID: " + getCurrentUserId.getId());
@@ -40,12 +40,11 @@ public class UserController {
                 ));
     }
 
-    @PostMapping(value = "/profile", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = ApiUserEndpoints.PROFILE_PATH, consumes = "application/json", produces = "application/json")
     public ResponseEntity<ApiResponseDto> updateUserProfile(@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto,
                                                             Authentication authentication) {
         CustomAuthUser getCurrentUserId = (CustomAuthUser) authentication.getPrincipal();
         CustomLogger.logInfo(UserController.class, "Fetching user info for user ID: " + getCurrentUserId.getId());
-
         return ResponseEntity.ok(
                 new ApiResponseDto(
                         null,
