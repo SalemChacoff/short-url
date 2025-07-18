@@ -14,7 +14,7 @@ import com.java.admin.dto.url.response.GetUrlsResponseDto;
 import com.java.admin.dto.url.response.PatchUrlResponseDto;
 import com.java.admin.dto.url.response.PutUrlResponseDto;
 import com.java.admin.usecase.url.IUrlService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

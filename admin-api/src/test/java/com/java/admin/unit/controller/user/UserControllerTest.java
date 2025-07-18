@@ -8,7 +8,7 @@ import com.java.admin.dto.user.request.UpdateUserRequestDto;
 import com.java.admin.dto.user.response.GetUserResponseDto;
 import com.java.admin.dto.user.response.UpdateUserResponseDto;
 import com.java.admin.usecase.user.IUserService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

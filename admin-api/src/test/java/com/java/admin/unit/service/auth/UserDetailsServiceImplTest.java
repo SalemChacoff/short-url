@@ -3,7 +3,7 @@ package com.java.admin.unit.service.auth;
 import com.java.admin.entity.user.UserEntity;
 import com.java.admin.repository.user.UserRepository;
 import com.java.admin.service.auth.UserDetailServiceImpl;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

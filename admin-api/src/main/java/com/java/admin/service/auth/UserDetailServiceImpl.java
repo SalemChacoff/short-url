@@ -3,7 +3,7 @@ package com.java.admin.service.auth;
 import com.java.admin.config.CustomLogger;
 import com.java.admin.entity.user.UserEntity;
 import com.java.admin.repository.user.UserRepository;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

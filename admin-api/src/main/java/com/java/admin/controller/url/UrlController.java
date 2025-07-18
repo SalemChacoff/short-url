@@ -8,7 +8,7 @@ import com.java.admin.dto.url.request.GetUrlsRequestDto;
 import com.java.admin.dto.url.request.PatchUrlRequestDto;
 import com.java.admin.dto.url.request.PutUrlRequestDto;
 import com.java.admin.usecase.url.IUrlService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

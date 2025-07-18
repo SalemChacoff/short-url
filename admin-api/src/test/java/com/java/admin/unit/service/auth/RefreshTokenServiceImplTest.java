@@ -9,7 +9,7 @@ import com.java.admin.repository.auth.RefreshTokenRepository;
 import com.java.admin.security.JwtService;
 import com.java.admin.service.auth.RefreshTokenServiceImpl;
 import com.java.admin.service.auth.UserDetailServiceImpl;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -5,7 +5,7 @@ import com.java.admin.constant.ApiUserEndpoints;
 import com.java.admin.dto.ApiResponseDto;
 import com.java.admin.dto.user.request.UpdateUserRequestDto;
 import com.java.admin.usecase.user.IUserService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

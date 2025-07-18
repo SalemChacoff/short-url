@@ -14,7 +14,7 @@ import com.java.admin.service.auth.AuthUserServiceImpl;
 import com.java.admin.service.auth.UserDetailServiceImpl;
 import com.java.admin.usecase.auth.IBlacklistedTokenService;
 import com.java.admin.usecase.auth.IRefreshTokenService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
