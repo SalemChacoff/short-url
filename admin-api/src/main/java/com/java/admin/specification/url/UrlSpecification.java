@@ -1,4 +1,4 @@
-package com.java.admin.repository.url.specification;
+package com.java.admin.specification.url;
 
 import com.java.admin.dto.url.request.GetUrlsRequestDto;
 import com.java.admin.entity.url.UrlEntity;

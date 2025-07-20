@@ -14,7 +14,7 @@ import com.java.admin.entity.user.UserEntity;
 import com.java.admin.exception.url.UrlException;
 import com.java.admin.mapper.url.UrlMapper;
 import com.java.admin.repository.url.UrlRepository;
-import com.java.admin.repository.url.specification.UrlSpecification;
+import com.java.admin.specification.url.UrlSpecification;
 import com.java.admin.repository.user.UserRepository;
 import com.java.admin.service.url.UrlServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
