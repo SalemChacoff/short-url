@@ -16,19 +16,10 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Permitir orígenes específicos - ajusta según tu frontend
         configuration.setAllowedOriginPatterns(List.of("*"));
-
-        // Permitir métodos HTTP comunes
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-
-        // Permitir headers comunes
         configuration.setAllowedHeaders(List.of("*"));
-
-        // Permitir credenciales
         configuration.setAllowCredentials(true);
-
-        // Configurar headers expuestos
         configuration.setExposedHeaders(List.of("Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -36,30 +36,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
-                        // Endpoints de autenticación y registro
+                        // Authentication endpoints
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(ApiAuthEndpoints.BASE_PATH + "/**").permitAll()
                         .requestMatchers(ApiAccountEndpoints.BASE_PATH + "/**").permitAll()
 
-                        // Endpoints públicos de prueba
+                        // Public endpoints
                         .requestMatchers("/api/v1/public/**").permitAll()
-
-                        // Documentación API
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-
-                        // Health checks y actuator (si los tienes)
                         .requestMatchers("/actuator/**", "/health/**").permitAll()
-
-                        // Recursos estáticos
                         .requestMatchers("/static/**", "/public/**", "/webjars/**").permitAll()
-
-                        // Error pages
                         .requestMatchers("/error/**").permitAll()
-
-                        // Permitir OPTIONS para CORS preflight
                         .requestMatchers("OPTIONS", "/**").permitAll()
-
-                        // Resto de endpoints requieren autenticación
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
