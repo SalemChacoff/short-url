@@ -115,3 +115,11 @@ tasks.named('test') {
         }
     }
 }
+
+tasks.named('processTestAot') {
+    enabled = false
+}
+
+tasks.named('processAot') {
+    enabled = false
+}
