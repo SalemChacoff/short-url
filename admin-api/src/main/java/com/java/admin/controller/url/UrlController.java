@@ -8,11 +8,10 @@ import com.java.admin.dto.url.request.GetUrlsRequestDto;
 import com.java.admin.dto.url.request.PatchUrlRequestDto;
 import com.java.admin.dto.url.request.PutUrlRequestDto;
 import com.java.admin.usecase.url.IUrlService;
-import com.java.admin.util.CustomAuthUser;
+import com.java.admin.security.CustomAuthUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping(ApiUrlEndpoints.BASE_PATH)
 @RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Url", description = "Endpoints for URL management")
 public class UrlController {
 

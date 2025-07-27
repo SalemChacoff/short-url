@@ -18,8 +18,8 @@ public class UrlMapper {
 
         return new CreateUrlResponseDto(
                 urlEntity.getId(),
-                urlEntity.getOriginalUrl(),
                 urlEntity.getShortUrl(),
+                urlEntity.getOriginalUrl(),
                 urlEntity.getDescription(),
                 urlEntity.isActive(),
                 urlEntity.getClickCount(),

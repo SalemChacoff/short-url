@@ -1,4 +1,4 @@
-package com.java.admin.util;
+package com.java.admin.security;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;

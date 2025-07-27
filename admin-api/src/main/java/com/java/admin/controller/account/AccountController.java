@@ -14,7 +14,6 @@ import com.java.admin.usecase.account.IAccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping(ApiAccountEndpoints.BASE_PATH)
 @RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Account", description = "Endpoints for user account management")
 public class AccountController {
 
@@ -41,7 +39,7 @@ public class AccountController {
             produces = "application/json",
             consumes = "application/json")
     public ResponseEntity<ApiResponseDto> createUserAccount(@Valid @RequestBody CreateAccountRequestDto createUserRequestDto) {
-        log.info("Creating user account with email: {}", createUserRequestDto.email());
+        CustomLogger.logInfo(AccountController.class, "Creating user account with email: " + createUserRequestDto.email());
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponseDto(new ArrayList<>(),
                         true,
@@ -54,7 +52,6 @@ public class AccountController {
     public ResponseEntity<ApiResponseDto> verifyAccount(@PathVariable String token) {
         VerifyAccountRequestDto verificationToken = new VerifyAccountRequestDto(token);
         CustomLogger.logInfo(AccountController.class, "Verifying account with token: " + token);
-
         return ResponseEntity.ok(new ApiResponseDto(new ArrayList<>(),
                 true,
                 accountService.verifyAccount(verificationToken)));
@@ -65,7 +62,6 @@ public class AccountController {
             produces = "application/json")
     public ResponseEntity<ApiResponseDto> resendVerificationCode(@Valid @RequestBody ResendVerificationCodeAccountRequestDto email) {
         CustomLogger.logInfo(AccountController.class, "Resending verification code to email: " + email.email());
-
         return ResponseEntity.ok(new ApiResponseDto(new ArrayList<>(),
                 true,
                 accountService.resendVerificationCode(email)));

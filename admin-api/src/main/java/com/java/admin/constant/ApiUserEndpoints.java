@@ -7,6 +7,7 @@ public class ApiUserEndpoints {
     public static final String API_VERSION = "/api/v1";
     public static final String BASE_NAME = "/users";
     public static final String BASE_PATH = API_VERSION + BASE_NAME;
+    public static final String PROFILE_PATH = "/profile";
 
     private ApiUserEndpoints() {
         // Private constructor to prevent instantiation

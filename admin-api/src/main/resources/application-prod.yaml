@@ -19,6 +19,8 @@ spring:
 
 server:
   port: 8080
+  servlet:
+    context-path: /admin-api
 
 service:
   base-host-path: ${BASE_HOST_PATH_PROD} # Host Path for the Frontend to access the API for Accounts and URL Shortening

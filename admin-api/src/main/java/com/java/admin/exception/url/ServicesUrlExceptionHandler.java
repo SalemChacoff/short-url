@@ -28,17 +28,4 @@ public class ServicesUrlExceptionHandler {
         return ResponseEntity.status(e.getErrorCode()).body(apiResponseDto);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponseDto> handleGeneralException(Exception e) {
-
-        CustomLogger.logError(ServicesUrlExceptionHandler.class, "General exception occurred: " + e.getMessage(), e);
-
-        ApiResponseDto apiResponseDto = new ApiResponseDto(
-                List.of(new ApiError(500, "Internal Server Error", e.getMessage())),
-                false,
-                null
-        );
-
-        return ResponseEntity.status(500).body(apiResponseDto);
-    }
 }

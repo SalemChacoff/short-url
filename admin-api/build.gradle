@@ -104,4 +104,22 @@ jacocoTestCoverageVerification {
 tasks.named('test') {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+
+    jvmArgs '-Xshare:off', '--add-opens=java.base/java.lang=ALL-UNNAMED'
+
+    doFirst {
+        def mockitoAgent = configurations.testRuntimeClasspath
+                .find { it.name.contains('mockito-core') }
+        if (mockitoAgent) {
+            jvmArgs "-javaagent:${mockitoAgent}"
+        }
+    }
+}
+
+tasks.named('processTestAot') {
+    enabled = false
+}
+
+tasks.named('processAot') {
+    enabled = false
 }

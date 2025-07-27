@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -27,16 +28,26 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final UserDetailServiceImpl userDetailsService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
+                        // Authentication endpoints
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers(ApiAuthEndpoints.BASE_PATH).permitAll()
-                        .requestMatchers(ApiAccountEndpoints.BASE_PATH).permitAll()
+                        .requestMatchers(ApiAuthEndpoints.BASE_PATH + "/**").permitAll()
+                        .requestMatchers(ApiAccountEndpoints.BASE_PATH + "/**").permitAll()
+
+                        // Public endpoints
+                        .requestMatchers("/api/v1/public/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/actuator/**", "/health/**").permitAll()
+                        .requestMatchers("/static/**", "/public/**", "/webjars/**").permitAll()
+                        .requestMatchers("/error/**").permitAll()
+                        .requestMatchers("OPTIONS", "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
