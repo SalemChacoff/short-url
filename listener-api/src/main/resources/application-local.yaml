@@ -1,0 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/admin-api
+    username: postgres
+    password: admin
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 60000
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+
+server:
+  port: 8082
+  servlet:
+    context-path: /listener-api

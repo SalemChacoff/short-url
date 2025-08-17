@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: listener-api
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  cache:
+    type: simple
+  output:
+    ansi:
+      enabled: always
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: user
+    password: pass
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+  data:
+    rest:
+      base-path: listener-api
+
+server:
+  servlet:
+    context-path: /listener-api
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level){highlight} %clr(%logger{36}){cyan} - %clr([PATH - %X{requestPath}]){blue} %clr([HEADERS - %X{requestHeaders}]){yellow} %clr(%m){%5p==INFO->green, %5p==WARN->yellow, %5p==ERROR->red}%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [PATH - %X{requestPath}] [HEADERS - %X{requestHeaders}] %msg%n"
+  level:
+    root: INFO
+    com.java.admin: DEBUG
+  file:
+    name: logs/application.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30

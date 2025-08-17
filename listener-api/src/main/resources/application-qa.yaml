@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    url: jdbc:postgresql://qa-db:5432/admin-api
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+
+server:
+  port: 8082
+  servlet:
+    context-path: /admin-api
