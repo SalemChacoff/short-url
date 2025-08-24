@@ -17,8 +17,8 @@ spring:
       hibernate:
         show_sql: true
   mail:
-    host: smtp.gmail.com
-    port: 587
+    host: localhost
+    port: 1025
     username: ${MAIL_USERNAME_LOCAL}
     password: ${MAIL_PASSWORD_LOCAL}
     properties.mail.smtp.auth: true

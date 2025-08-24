@@ -113,7 +113,7 @@ export default function LandingPage() {
               </div>
               <h4 className="text-xl font-semibold text-white mb-2">100% Seguro</h4>
               <p className="text-blue-100">
-                Protección contra malware y enlaces maliciosos. Tus datos están seguros.
+                Protección contra malware y enlaces maliciosos. Tus datos están seguros. ssd
               </p>
             </div>
           </div>

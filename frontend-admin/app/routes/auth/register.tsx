@@ -65,17 +65,77 @@ export default function Register() {
             )}
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-white">
-                Nombre completo
+              <label htmlFor="username" className="block text-sm font-medium text-white">
+                Nombre de usuario
               </label>
               <input
-                id="name"
-                name="name"
+                id="username"
+                name="username"
                 type="text"
-                autoComplete="name"
+                autoComplete="username"
                 required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-yellow-300 focus:border-yellow-300"
-                placeholder="Tu nombre"
+                placeholder="Tu nombre de usuario"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium text-white">
+                Nombre
+              </label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-yellow-300 focus:border-yellow-300"
+                placeholder="Tu primer nombre"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium text-white">
+                Apellido
+              </label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-yellow-300 focus:border-yellow-300"
+                placeholder="Tu apellido"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white">
+                Numero de telefono
+              </label>
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="text"
+                autoComplete="tel"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-yellow-300 focus:border-yellow-300"
+                placeholder="Tu numero de telefono"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-white">
+                Dirección
+              </label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                autoComplete="address"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-yellow-300 focus:border-yellow-300"
+                placeholder="Tu dirección"
               />
             </div>
 
